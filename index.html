@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- <link type="text/css" rel="stylesheet" href="bootstrap_css/bootstrap_5.min.css"> -->
+        <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link type="text/css" rel="stylesheet" href="css/style.css">
+        <link type="text/css" rel="stylesheet" href="css/lodar.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+        <title>Index</title>
+        <style type="text/css">
+            body{                
+                background-color: #ffffff;
+            }
+            .card{
+                /* height: 86vh; */
+                margin-top: 40px;
+                border:none;
+                /* background-image: linear-gradient(to right, #ffc1076b, #ffc107); */
+            }
+            .card-header{
+                border: none!important;
+                background-color: #ffffff;
+            }
+            .card-header img{
+                border-radius: 50%;
+                height: 140px;
+                width: 140px;
+            }
+            .card-body{
+                
+            }
+            .card-footer{
+                padding: 0px!important;
+            }
+            .btn-warning{
+                color: #ffffff;
+                font-size: 16px;
+                font-weight: 600;                
+            }
+            .card-body .mText{
+                margin-top: 40px;
+            }
+            .card-body h2{
+                font-size: 40px;
+                font-weight: 600;
+            }
+            .btn{
+                box-shadow: 1px 2px 9px #ffffff, inset -8px -8px 8px #ffc107;
+            }
+            .btn:hover{
+                background-color: #ffc107;
+                border-color: #ffc107;
+                outline: none;
+                color: #ffffff;
+            }
+            input{
+                color: gray!important;
+                background: white;
+                outline: none;
+                border: none;
+                box-shadow: 2px solid black!important;                
+                box-shadow: 1px 2px 9px #cbced1, inset -8px -8px 8px #ffffff;
+            }
+            input::placeholder{
+                font-size: 14px;
+                color: #80808082!important;
+                letter-spacing: 1px;
+            }
+            .output{
+                color: #ff8b00;
+            }
+            
+        </style>
+    </head>
+    <body ng-app="app">        
+        <div class="container" ng-controller="PaybillCtrl">
+            <!-- <div class="loading" ng-show="loadar"></div> -->
+            <div class="main-lds">
+                <div class="lds-ripple" ng-show="loadar"><div></div><div></div></div>
+            </div>            
+            <div class="row">
+                <section class="col-xs-12 col-sm-12 col-md-offset-4 col-lg-offset-4 col-md-2 col-lg-2"></section>
+                <section class="col-xs-12 col-sm-12 col-md-offset-4 col-lg-offset-4 col-md-8 col-lg-8">
+                    <div class="card" ng-show="firstScreen">
+                        <div class="card-header text-center">
+                            <img src="{{logo}}" alt="logo" class="img img-circle img-responsive">
+                        </div>
+                        <div class="card-body text-center">
+                            <div class="mText">
+                                <h2 class="text-primary">{{welcome}}</h2>
+                                <h5 class="text-warning">{{moto}}</h5>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-sm btn-block btn-warning" ng-click="fScreenNext()">Next</button>
+                        </div>
+                    </div>
+                    <div class="card" ng-show="secScreen">
+                        <div class="card-header text-center">
+                            <img src="{{logo}}" alt="logo" class="img img-circle img-responsive">
+                            <div class="text-center">
+                                <h4 class="text-primary">{{logIn}}</h4>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <form name="loginForm">
+                                <div class="form-group">
+                                    <label for="uName">User Name:</label>
+                                    <input type="text" class="form-control" ng-model="userName" placeholder="User Name" id="uName">
+                                    <p class="error" ng-show="!userName" ng-bind="errUserName"></p>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pwd">Password:</label>
+                                    <input type="password" class="form-control" ng-model="userPass" placeholder="Enter password" id="pwd">
+                                    <p class="error" ng-show="!userPass" ng-bind="errPass"></p>
+                                </div>              
+                                <div class="error">{{errMessage_checkLogin}}</div>              
+                                <div class="form-group form-check text-center">
+                                    <a href="#" class="" ng-click="creatNewAccount()">Creat New Account | Sign Up</a>
+                                </div>
+                                <button type="button" class="btn btn-warning btn-block" ng-click="btnLogIn()">Log In</button>
+                                
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card" ng-show="thirdScreen">
+                        <div class="card-header text-center">
+                            <img src="{{logo}}" alt="logo" class="img img-circle img-responsive">
+                            <div class="text-center">
+                                <h4 class="text-warning">{{signIn}}</h4>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <form name="signInForm">  
+                                <div class="form-group">
+                                    <label for="signUname">First Name:</label>
+                                    <input type="text" class="form-control" ng-model="signFirstName" placeholder="First Name" id="signUName">                                    
+                                    <p class="error" ng-show="!signFirstName" ng-bind="errSignFirstName"></p>
+                                </div> 
+                                <div class="form-group">
+                                    <label for="signUname">Last Name:</label>
+                                    <input type="text" class="form-control" ng-model="signLastName" placeholder="Last Name" id="signUName">                                    
+                                    <p class="error" ng-show="!signLastName" ng-bind="errSignLastName"></p>
+                                </div>                             
+                                <div class="form-group">
+                                    <label for="signUname">User Name:</label>
+                                    <input type="text" class="form-control" ng-model="signUserName" placeholder="User Name" id="signUName">                                    
+                                    <p class="error" ng-show="!signUserName" ng-bind="errSignUserName"></p>
+                                </div>
+                                <div class="form-group">
+                                    <label for="signContact">Contact:</label>
+                                    <input type="number" class="form-control" ng-model="signUserContact" placeholder="Contact" id="signUContact">
+                                    <p class="error" ng-show="!signUserContact" ng-bind="errSignContact"></p>
+                                </div>
+                                <div class="form-group">
+                                    <label for="signPwd">Password:</label>
+                                    <input type="password" class="form-control" ng-model="signUserPass" placeholder="Enter password" id="signPwd">
+                                    <p class="error" ng-show="!signUserPass" ng-bind="errUserPass"></p>
+                                </div>
+                                <div class="form-group">
+                                    <label for="signConfPwd">Confirm Password:</label>
+                                    <input type="password" class="form-control" ng-model="signConfUserPass" placeholder="Enter Confirm password" id="signConfPwd">
+                                    <p class="error" ng-show="!signConfUserPass" ng-bind="errConfUserPass"></p>
+                                </div>                                
+                                <div class="form-group form-check text-center">
+                                    <a href="#" class="" ng-click="allreadyAccount()">Allready have a account?</a>
+                                </div>
+                                <button type="submit" class="btn btn-warning btn-block" ng-click="btnSignIn()">Sign In</button>                                
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card" ng-show="fourthScreen">
+                        <div class="card-header text-center">
+                            <img src="{{logo}}" alt="logo" class="img img-circle img-responsive">
+                            <h6 class="text-success">{{createdAccount}}</h6>
+                        </div>
+                        <div class="card-body text-center">
+                            <div class="">
+                                <h5 class="text-primary">{{signFirstName}} {{signLastName}}</h5>
+                                <h5 class="text-primary">{{welcome}} To</h5>
+                                <h5 class="text-warning">{{moto}}</h5>                                
+                            </div>
+                            <div class="text-primary">
+                                <div>Username : <span class="output">{{signUserName}}</span></div>
+                                <div>password : <span class="output">{{signUserPass}}</span></div>
+                                <div>Contact : <span class="output">{{signUserContact}}</span></div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-sm btn-block btn-warning" ng-click="fourthScreenNext()">Login Now</button>
+                        </div>
+                    </div>
+                    <div class="card" ng-show="fifthScreen">
+                        <div class="card-header text-center">
+                            <img src="{{logo}}" alt="logo" class="img img-circle img-responsive">
+                            <div class="text-center">
+                                <h4 class="text-primary">{{logIn}}</h4>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <form name="loginForm">
+                                <div class="form-group">
+                                    <label for="uName">User Name:</label>
+                                    <input type="text" class="form-control" ng-model="userName" placeholder="User Name" id="uName">
+                                    <p class="error" ng-show="!userName" ng-bind="errUserName"></p>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pwd">Password:</label>
+                                    <input type="password" class="form-control" ng-model="userPass" placeholder="Enter password" id="pwd">
+                                    <p class="error" ng-show="!userPass" ng-bind="errPass"></p>
+                                </div>              
+                                <div class="error">{{errMessage_checkLogin}}</div>              
+                                <div class="form-group form-check text-center">
+                                    <a href="#" class="" ng-click="creatNewAccount()">Creat New Account | Sign Up</a>
+                                </div>
+                                <button type="button" class="btn btn-warning btn-block" ng-click="btnNextLogIn()">Log In</button>
+                                
+                            </form>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+        
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
+        <script type="text/javascript">
+            let app = angular.module("app",[]);
+            
+            app.controller("PaybillCtrl", function($scope, $timeout,$http,$window){
+                localStorage.setItem('shopData', JSON.stringify($scope.shop_Data));
+                $scope.welcome = "Welcome";
+                $scope.moto = "Bill Pay App";
+                $scope.logo = "img/logo.jpg";
+                $scope.signIn = "Sign In";
+                $scope.logIn = "Log In";
+
+                $scope.loadar = true;
+                $timeout(function () { 
+                    $scope.firstScreen = true;                    
+                    $scope.loadar = false;
+                }, 3000);
+
+                $scope.fScreenNext = function(){                    
+                    $scope.loadar = true;
+                    $scope.firstScreen = true;
+                    $timeout(function () { 
+                        $scope.firstScreen = false;
+                        $scope.secScreen = true;
+                        $scope.loadar = false;
+                    }, 3000);
+                    
+                }            
+                $scope.creatNewAccount = function(){
+                    $scope.loadar = true;
+                    $timeout(function () { 
+                        $scope.secScreen = false;
+                        $scope.thirdScreen = true;
+                        $scope.loadar = false;
+                    }, 3000);
+                }
+                $scope.allreadyAccount = function(){
+                    $scope.loadar = true;
+                    $timeout(function () { 
+                        $scope.secScreen = true;
+                        $scope.thirdScreen = false;
+                        $scope.loadar = false;
+                    }, 3000);
+                    
+                }                
+
+                $scope.user_Data = [];
+
+                $scope.saved_User_Data = localStorage.getItem('userData');
+                $scope.user_Data = (localStorage.getItem('userData')!==null) ? JSON.parse($scope.saved_User_Data) :[];
+                localStorage.setItem('userData', JSON.stringify($scope.user_Data));
+                //console.log($scope.user_Data.id);
+
+                // $.grep($scope.user_Data, function(e){
+                //     $scope.viewUserName = e.user_name;
+                //     $scope.viewUserPass = e.user_pass;
+                //     $scope.viewUserContact = e.user_contact;
+                // });
+
+
+                $scope.btnSignIn = function(){
+                    let index = $scope.user_Data.lenght + 1;
+                    if($scope.signFirstName == null){
+                        $scope.errSignFirstName = "Please enter first name";
+                    }else if($scope.signLastName == null){
+                        $scope.errSignLastName = "Please enter last name";
+                    }else if($scope.signUserName == null){
+                        $scope.errSignUserName = "Please enter username";
+                    }else if($scope.signUserContact == null){
+                        $scope.errSignContact = "Please enter contact";
+                    }else if($scope.signUserPass == null){
+                        $scope.errUserPass = "Please enter password";
+                    }else if($scope.signConfUserPass == null){
+                        $scope.errConfUserPass = "Please enter confirm password";
+                    }else{
+                        $scope.user_Data.push({
+                            id:index,
+                            user_fName: $scope.signFirstName,
+                            user_fLame: $scope.signLastName,
+                            user_name: $scope.signUserName,
+                            user_contact: $scope.signUserContact,
+                            user_pass: $scope.signUserPass,
+                            user_conf_pass: $scope.signConfUserPass,
+                        });
+                        localStorage.setItem('userData', JSON.stringify($scope.user_Data));
+                        //console.log($scope.user_Data);
+                        $scope.loadar = true;
+                        $timeout(function () { 
+                            $scope.createdAccount = "Your account has been successfully created."
+                            $scope.fourthScreen = true;
+                            $scope.thirdScreen = false;
+                            $scope.loadar = false;
+                        }, 3000);
+
+                    }
+                }
+                
+                $scope.btnLogIn = function(){
+                    $.grep($scope.user_Data, function(e){
+                        if($scope.userName == null){
+                            $scope.errUserName = "Please enter username";
+                        }else if($scope.userPass == null){
+                            $scope.errPass = "Please enter password"
+                        }else if($scope.userName != e.user_name || $scope.userPass != e.user_pass){
+                            $scope.errMessage_checkLogin = "User Invalid...! Please enter correct id & password";
+                        }else{
+                            $scope.errMessage_checkLogin = "";
+                            $scope.loadar = true;
+                            $timeout(function () { 
+                                $scope.errMessage_checkLogin = "";
+                                $window.location = "createBill.html";
+                            }, 3000);
+                        }
+                    });                    
+                }
+                $scope.btnNextLogIn = function(){
+                    $.grep($scope.user_Data, function(e){
+                        if($scope.userName == null){
+                            $scope.errUserName = "Please enter username";
+                        }else if($scope.userPass == null){
+                            $scope.errPass = "Please enter password"
+                        }else if($scope.userName != e.user_name || $scope.userPass != e.user_pass){
+                            $scope.errMessage_checkLogin = "User Invalid...! Please enter correct id & password";
+                        }else{
+                            $scope.errMessage_checkLogin = "";
+                            $scope.loadar = true;
+                            $timeout(function () { 
+                                $scope.errMessage_checkLogin = "";
+                                $window.location = "addShop.html";
+                            }, 3000);
+                        }
+                    });                    
+                }
+
+
+                $scope.fourthScreenNext = function(){                    
+                    $scope.loadar = true;
+                    $timeout(function () { 
+                        $scope.fifthScreen = true;
+                        $scope.fourthScreen = false;
+                        $scope.loadar = false;
+                    }, 3000);
+                }
+            });
+        </script>
+  </body>
+</html>

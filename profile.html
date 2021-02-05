@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link type="text/css" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link type="text/css" rel="stylesheet" href="css/style.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-sanitize.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+        
+        <title>My Profile</title>
+        <style type="text/css">            
+            i span{
+                width: 13px;
+                height: 13px;
+                font-size: 10px!important;
+                /* margin: 0px 0 0px 0px; */
+                border-radius: 50%!important;
+                line-height: 10px;
+                padding: 1px 0 0 0px!important;
+            }
+            .card{
+                margin-bottom: 20px;
+            }
+            .card-header{
+                background: #ffffff;
+            }
+            .card-body input{
+                border: none;
+                border-bottom: 1px solid gainsboro;
+            }
+            h2 img{
+                width: 60px;
+                height: 60px;
+                border-radius: 100%;
+            }
+            .nav-tabs a{
+                margin:10px;
+            }
+        </style>
+    </head>
+    <body ng-app="myApp">
+        <div class="wrapper d-flex align-items-stretch">
+            <nav id="sidebar" ng-controller="navCtrl">
+                <div class="p-4 pt-5">
+                    <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(img/shopLogo.jpg);"></a>
+                    <ul class="list-unstyled components mb-5">                                               
+                        <li>
+                            <a href="createBill.html"><i class="fa fa-list-alt"></i>&nbsp;Create Bill</a>
+                        </li>
+                        <li>
+                            <a href="history.html"><i class="fa fa-history"></i>&nbsp;History</a>
+                        </li>
+                        <li class="active">
+                            <a href="completedNote.html"><i class="fa fa-user-o"></i>&nbsp;My Profile</a>
+                        </li>
+                    </ul>
+                    <div class="footer">                                               
+                        <ul class="list-unstyled">
+                            <li>
+                                <a ng-click="logout()"><i class="fa fa-power-off"></i>&nbsp;Logout</a>                                
+                            </li>
+                        </ul>
+                        <a href="#">Bill Pay It</a>
+                    </div>
+                </div>
+            </nav>
+
+            <div id="content" ng-controller="myController" style="margin: 0 0 0px 50px;">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <div class="container-fluid">                    
+                        <button type="button" id="sidebarCollapse" class="btn btn-warning text-white">
+                            <i class="fa fa-bars"></i>
+                            <span class="sr-only">Toggle Menu</span>
+                        </button>                  
+                        <h3 class="text-primary">Bill Pay App</h3>
+                        <h2 class="text-center"><img src="img/shopLogo.jpg" alt=""" class="img img-circle"></h2>         
+                    </div>
+                </nav>
+                <div class="container">
+                    <div class="well well-light">
+                        <div class="row">
+                            <section class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin: 0 -22px;">
+                                <h4 class="text-warning">My Profile</h4>                                                                
+                            </section>
+                        </div>  
+                        <!-- <div class="row">
+                            <section class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                                <img src="image/profile.jpg" alt="" class="img img-fluid" style="border-radius: 50%;height: 140px;width: 200px;">
+                            </section>
+                            <section class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a class="btn btn-xs btn-primary" data-toggle="tab" href="#personal">Personal Details</a></li>
+                                    <li><a class="btn btn-xs" data-toggle="tab" href="#shopDetails">Shop Details</a></li>                                   
+                                </ul>
+                                
+                                <div class="tab-content">
+                                    <div id="personal" class="tab-pane fade in active">
+                                        <div>Name : <span>Mac Chikhale</span></div>
+                                    </div>
+                                    <div id="shopDetails" class="tab-pane fade">
+                                      <h3>Menu 1</h3>
+                                      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                    </div>                                    
+                                </div>
+                            </section>
+                        </div>-->
+                        <div class="row">
+                            <section class="col-xs-12 col-sm-12 col-md-2 col-lg-2 text-center" style="border-right: 1px solid rgb(179, 174, 174);">
+                                <img src="image/profile.jpg" alt="" class="img img-fluid" style="border-radius: 50%;margin:auto;height: 140px;width: 200px;">
+                            </section>
+                            <section class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+                                <table >
+                                    <tr>
+                                        <th>Name</th>
+                                        <td>:</td>
+                                        <td>{{userName}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Mobile Number</th>
+                                        <td>:</td>
+                                        <td>750075828</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Shop Name</th>
+                                        <td>:</td>
+                                        <td>Sai Krupa General Store</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Shop Time</th>
+                                        <td>:</td>
+                                        <td>10::00 AM - 08:00 PM</td>
+                                    </tr>
+                                    <tr>
+                                        <th><Address></Address></th>
+                                        <td>:</td>
+                                        <td>Kalyan, Thane</td>
+                                    </tr>
+                                </table>
+                            </section>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+        </div>
+        <script type="text/javascript" src="bootstrap_js/bootstrap_proper.min.js"></script>
+        <script type="text/javascript" src="bootstrap_js/bootstrap_5.min.js"></script>
+        <script type="text/javascript" src="jquery/jquery.3.5.1.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#sidebarCollapse').on('click',function(){
+                     $('#sidebar').toggleClass('active');
+                });
+                
+            });
+        </script>
+        <script type="text/javascript">
+            var myApp = angular.module('myApp', []);
+            var userData = JSON.parse(localStorage.getItem("userData"));
+            //var shopData = JSON.parse(localStorage.getItem("shopData"));
+            myApp.controller('myController', function($scope, $http) {                
+                $scope.userName = userData;
+                //console.log($scope.userName);                
+            });
+
+            myApp.controller("navCtrl",function($scope,$window,$location){
+                $scope.logout = function(attr){
+                    $window.location = "index.html";
+                }
+            });
+        </script>
+  </body>
+</html>

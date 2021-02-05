@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- <link type="text/css" rel="stylesheet" href="bootstrap_css/bootstrap_5.min.css"> -->
+        <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link type="text/css" rel="stylesheet" href="css/style.css">
+        <link type="text/css" rel="stylesheet" href="css/lodar.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+        <title>Add Shop</title>
+        <style type="text/css">
+            body{                
+                background-color: #ffffff;
+            }
+            .card{
+                /* height: 86vh; */
+                border:none;
+                /* background-image: linear-gradient(to right, #ffc1076b, #ffc107); */
+            }
+            .card-header{
+                border: none!important;
+                background-color: #ffffff;
+            }
+            .card-header img{
+                border-radius: 50%;
+                height: 140px;
+                width: 140px;
+            }
+            .card-body{
+                
+            }
+            .card-footer{
+                padding: 0px!important;
+            }
+            .btn-warning{
+                color: #ffffff;
+                font-size: 16px;
+                font-weight: 600;                
+            }
+            .card-body .mText{
+                margin-top: 40px;
+            }
+            .card-body h2{
+                font-size: 40px;
+                font-weight: 600;
+            }
+            .btn{
+                box-shadow: 1px 2px 9px #ffffff, inset -8px -8px 8px #ffc107;
+            }
+            .btn:hover{
+                background-color: #ffc107;
+                border-color: #ffc107;
+                outline: none;
+                color: #ffffff;
+            }
+            input{
+                color: gray!important;
+                background: white;
+                outline: none;
+                border: none;
+                box-shadow: 2px solid black!important;                
+                box-shadow: 1px 2px 9px #cbced1, inset -8px -8px 8px #ffffff;
+            }
+            input::placeholder{
+                font-size: 14px;
+                color: #80808082!important;
+                letter-spacing: 1px;
+            }
+            textarea{
+                color: gray!important;
+                background: white;
+                outline: none;
+                border: none;
+                box-shadow: 2px solid black!important;                
+                box-shadow: 1px 2px 9px #cbced1, inset -8px -8px 8px #ffffff;
+            }
+            textarea::placeholder{
+                font-size: 14px;
+                color: #80808082!important;
+                letter-spacing: 1px;
+            }
+        </style>
+    </head>
+    <body ng-app="app">
+        <div class="container" ng-controller="PaybillCtrl">
+            <div class="main-lds">
+                <div class="lds-ripple" ng-hide="loadar"><div></div><div></div></div>
+            </div>
+            <div class="row">
+                <section class="col-xs-12 col-sm-12 col-md-offset-4 col-lg-offset-4 col-md-2 col-lg-2"></section>
+                <section class="col-xs-12 col-sm-12 col-md-offset-4 col-lg-offset-4 col-md-8 col-lg-8">
+                    <div class="card" ng-show="addShopScreen">
+                        <div class="card-header text-center">
+                            <img src="{{logo}}" alt="logo" class="img img-circle img-responsive">
+                            <div class="text-center">
+                                <h4 class="text-primary">{{addStore}}</h4>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <form name="addNewStore">
+                                <div class="form-group">
+                                    <label for="uName">Shop Name:</label>
+                                    <input type="text" class="form-control" ng-model="shopName" placeholder="Shop Name" id="shopName">
+                                    <p class="error" ng-show="!shopName" ng-bind="errShopName"></p>
+                                </div>
+                                <div class="form-group">
+                                    <label for="uName">Shopkeeper Name:</label>
+                                    <input type="text" class="form-control" ng-model="shopkeeperName" placeholder="Shopkeeper Name" id="shopkeeperName">
+                                    <p class="error" ng-show="!shopkeeperName" ng-bind="errShopkeeperName"></p>
+                                </div>
+                                <div class="form-group">
+                                    <label for="uName">Upload Logo:</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" accept="image/*" value="{{shopLogo}}" ng-value="shopLogo" ng-model="shopLogo" id="uploadShopLogo">
+                                        <label class="custom-file-label" for="customFile">Choose file</label>
+                                        <p class="error" ng-show="!shopLogo" ng-bind="errShopLogo"></p>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-xs-6">
+                                        <label for="startTime">Start Time</label>
+                                        <input type="time" class="form-control" ng-model="startTime" id="startTime" placeholder="Start Time">
+                                        <p class="error" ng-show="!startTime" ng-bind="errStartTime"></p>
+                                    </div>
+                                    <div class="form-group col-xs-6">
+                                        <label for="endTime">End Time</label>
+                                        <input type="time" class="form-control" ng-model="endTime" id="endTime" placeholder="End Time">
+                                        <p class="error" ng-show="!endTime" ng-bind="errEndTime"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="shopAddress">Address</label>
+                                    <textarea class="form-control" ng-model="shopAddress" id="shopAddress" rows="3"></textarea>
+                                    <p class="error" ng-show="!shopAddress" ng-bind="errShopAddress"></p>
+                                </div>                    
+                                <button type="submit" class="btn btn-warning btn-block" ng-click="btnAddShop()">Submit</button>                                
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card" ng-show="viewShopDetails">
+                        <div class="card-header text-center">
+                            <img src="{{logo}}" alt="logo" class="img img-circle img-responsive">
+                            <h6 class="text-success">{{createdAccount}}</h6>
+                        </div>
+                        <div class="card-body text-center">
+                            <div class="">
+                                <h5 class="text-primary">{{signFirstName}} {{signLastName}}</h5>
+                                <h5 class="text-primary">{{welcome}} To</h5>
+                                <h5 class="text-warning">{{moto}}</h5>                                
+                            </div>
+                            <div class="text-primary">
+                                <div>Username : <span class="output">{{signUserName}}</span></div>
+                                <div>password : <span class="output">{{signUserPass}}</span></div>
+                                <div>Contact : <span class="output">{{signUserContact}}</span></div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-sm btn-block btn-warning" ng-click="fourthScreenNext()">Login Now</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+        
+        <script type="text/javascript">
+            let storeData = localStorage.getItem("userData");
+            //console.log(storeData);
+            let app = angular.module("app",[]);
+            app.controller("PaybillCtrl", function($scope,$window,$timeout,$http){
+                $scope.logo = "img/logo.jpg";
+                $scope.addStore = "Add Shop";
+                $scope.logIn = "Log In";
+
+                $scope.userStoreData = storeData;
+                
+                $timeout(function () { 
+                    $scope.addShopScreen = true;                    
+                    $scope.loadar = true;
+                }, 3000);
+
+                $scope.btnAddShop = function(shopName,shopkeeperName,shopLogo,startTime,endTime,shopAddress){
+                    var shopName = $window.document.getElementById('shopName');
+                    var shopkeeperName = $window.document.getElementById('shopkeeperName');
+                    var shopLogo = $window.document.getElementById('uploadShopLogo');
+                    var startTime = $window.document.getElementById('startTime');
+                    var endTime = $window.document.getElementById('errEndTime');
+                    var shopAddress = $window.document.getElementById('shopAddress');
+                    $scope.shop_Data = [];
+                    var shopData = [];
+
+                    if($scope.shopName == null){
+                        $scope.errShopName = "Please enter shop name";                        
+                        shopName.focus();
+                    }else if($scope.shopkeeperName == null){
+                        $scope.errShopkeeperName = "Please enter shopkeeper name";
+                        shopkeeperName.focus();
+                    }else if($scope.startTime == null){
+                        $scope.errStartTime = "Please enter start time";
+                        startTime.focus();
+                    }else if($scope.endTime == null){
+                        $scope.errEndTime = "Please enter end time";
+                        endTime.focus();
+                    }else if($scope.shopAddress == null){
+                        $scope.errShopAddress = "Please enter shop address";
+                        shopAddress.focus();
+                    }else{
+                        $scope.shop_Data.push({
+                            shop:$scope.shopName,
+                            shopkeeper:$scope.shopkeeperName,
+                            logo:$scope.shopLogo,
+                            startTime:$scope.startTime,
+                            endTime:$scope.endTime,
+                            address:$scope.shopAddress
+                        });                        
+                        localStorage.setItem('shopData', JSON.stringify($scope.shop_Data));
+                        //$window.location = "createBill.html"
+                        $scope.loadar = false;
+                        $timeout(function () { 
+                            $scope.addShop = "Your shop has been successfully created."
+                            $scope.viewShopDetails = true;                            
+                            $scope.loadar = true;
+                            $window.location = "createBill.html"
+                        }, 3000);
+                        $scope.shopName = "";
+                        $scope.shopkeeperName = "";
+                        $scope.shopLogo = "";
+                        $scope.startTime = "";
+                        $scope.endTime = "";
+                        $scope.shopAddress = "";
+                    }
+                }                
+            });
+        </script>
+  </body>
+</html>
